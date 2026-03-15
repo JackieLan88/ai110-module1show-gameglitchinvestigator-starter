@@ -49,14 +49,21 @@ With my current experience in python, I was able to follow along with the syntax
   Through the same approach of binary search, I executed the program and changed the difficulty level of the game. I started out guessing the number in a range of halves, until I guessed it. It worked! For each bug I had initially noticed in the website, I knew it was crucial to read the whole script to identify the code that was causing them.
 - Did AI help you design or understand any tests? How?
   When I first prompted AI to help me generate test cases for the game, it gave me an output file of the attempts to find any bugs within the logic_utils file and the UI app file. This output file had displayed succesful tests that were applied to almost every feature of the game.
-
-## However, in the test_game_logic file, I was surprised to see test cases that addressed bugs that I didn't consider before. For example: accepting decimal inputs from user instead of rejecting them, through truncation.
+  However, in the test_game_logic file, I was surprised to see test cases that addressed bugs that I didn't consider before. For example: accepting decimal inputs from user instead of rejecting them, through truncation.
 
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+
+The secret number kept changing in the app because as each time the script was being executed, the random int secret number from 1-100 was generated and saved as the user attempted to guess the number.
+
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+  Session states ("session_state") is a feature in streamlit that saves the current state of the webpage, including variable data. Reruns are the executions of the script that allow us to continue playing the game until it is eventually st.stop()ped.
 - What change did you make that finally gave the game a stable secret number?
+  Through the help of claude, I was able to identify the code snippet that retrieved the secret number as the script was being rerunned. We extended the conditional statement to:
+  if "secret" not in st.session_state or st.session_state.get("difficulty") != difficulty:
+  st.session_state.secret = random.randint(low, high)
+  st.session_state.difficulty = difficulty
 
 ---
 
@@ -66,3 +73,6 @@ With my current experience in python, I was able to follow along with the syntax
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+Reading more python code to improve fluid understanding of logic. Only using claude or copilot to do heavy changes in code like changing the logic function of our app to the logic_utils.py file.
+One thing I would do differently next time I would with AI is being very careful when accepting suggestions. AI is very powerful in code generation, I am speechless when I see how fast it manages to adjust to corrections.
